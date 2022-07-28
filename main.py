@@ -22,7 +22,8 @@ def a_process_for_parallel_execution(name ="file.txt", runtime = 3600, id = -1, 
         tries += 1
         if True:
             if tries % 10 == 0:
-                print(f"id: {id}, tries: {tries}")
+                pass
+                # print(f"id: {id}, tries: {tries}")
         lk = calculateLoosingKoalition.get_loosing_coalition(loosing_coals_all = search_space, max_out = max_out, max_overall = max_overall, min_gain = min_gain, kick_strategy = kick_strategy, kick_rate = kick_rate, give_up_rate = give_up_rate, min_avg_pop_size = min_avg_pop_size)
         res = get_cover(lk = lk, debug = False)
         if res > 4:
@@ -55,23 +56,26 @@ if __name__ == '__main__':
         print(str(c))
     
     # res = get_cover(lk = calculateLoosingKoalition.get_loosing_coals())
+    #a_process_for_parallel_execution()
     
-    if True:   
+    if True: 
+        """
+        #1  
         proc = []
         
-        num_processes = 3
-        
-        max_out_l = [5,5,5,5,5,5]
-        max_overall_l = [15,15,15,18,18,18]
-        min_gain_l = [7,7,7,7,7,7,7,7,7,7]
-        kick_strategy_l = ["random","random","random","random","random","random","random"]
-        kick_rate_l = [100,100,100,100,100,100]
-        give_up_rate_l = [1000,1000,1000,1000,1000,1000,1000]
-        min_avg_pop_size_l = [0.64,0.64,0.64,0.64,0.64,0.64]
-        min_pop_size_l = [0.62,0.62,0.62,0.62,0.62,0.62]
-        runtime = 3600
+        num_processes = 16     
+        max_out_l = [5] * num_processes
+        max_overall_l = [15] * num_processes
+        min_gain_l = [7] * num_processes
+        kick_strategy_l = ["random"] * num_processes
+        kick_rate_l = [100] * num_processes
+        give_up_rate_l = [1000] * num_processes
+        min_avg_pop_size_l = [0.64] * num_processes
+        min_pop_size_l = [0.62] * num_processes
+        runtime = 1800
         timestr = time.strftime("%Y%m%d-%H%M%S")
         name = "results"+timestr+".txt"
+        name = "p_1.txt"
         with open(name, 'w') as f: 
                     f.write("Results\n\n")
                     f.flush()
@@ -83,3 +87,194 @@ if __name__ == '__main__':
             time.sleep(0.1)
         for i in range(len(proc)):       
             proc[i].join() 
+            
+        #2    
+        proc = []
+        
+        num_processes = 16     
+        max_out_l = [5] * num_processes
+        max_overall_l = [14] * num_processes
+        min_gain_l = [7] * num_processes
+        kick_strategy_l = ["random"] * num_processes
+        kick_rate_l = [100] * num_processes
+        give_up_rate_l = [1000] * num_processes
+        min_avg_pop_size_l = [0.64] * num_processes
+        min_pop_size_l = [0.62] * num_processes
+        runtime = 1800
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        name = "results"+timestr+".txt"
+        name = "p_2.txt"
+        with open(name, 'w') as f: 
+                    f.write("Results\n\n")
+                    f.flush()
+
+
+        for i in range(num_processes):         
+            proc.append(Process(target=a_process_for_parallel_execution, args=(name,runtime,i,max_out_l[i],max_overall_l[i],min_gain_l[i], kick_strategy_l[i],kick_rate_l[i],give_up_rate_l[i],min_avg_pop_size_l[i],min_pop_size_l[i])))
+            proc[-1].start()
+            time.sleep(0.1)
+        for i in range(len(proc)):       
+            proc[i].join() 
+
+
+        proc = []
+        
+        num_processes = 16     
+        max_out_l = [5] * num_processes
+        max_overall_l = [18] * num_processes
+        min_gain_l = [7] * num_processes
+        kick_strategy_l = ["random"] * num_processes
+        kick_rate_l = [100] * num_processes
+        give_up_rate_l = [1000] * num_processes
+        min_avg_pop_size_l = [0.64] * num_processes
+        min_pop_size_l = [0.62] * num_processes
+        runtime = 1800
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        name = "results"+timestr+".txt"
+        name = "p_3.txt"
+        with open(name, 'w') as f: 
+                    f.write("Results\n\n")
+                    f.flush()
+
+
+        for i in range(num_processes):         
+            proc.append(Process(target=a_process_for_parallel_execution, args=(name,runtime,i,max_out_l[i],max_overall_l[i],min_gain_l[i], kick_strategy_l[i],kick_rate_l[i],give_up_rate_l[i],min_avg_pop_size_l[i],min_pop_size_l[i])))
+            proc[-1].start()
+            time.sleep(0.1)
+        for i in range(len(proc)):       
+            proc[i].join() 
+            
+        proc = []
+        
+        num_processes = 16     
+        max_out_l = [5] * num_processes
+        max_overall_l = [20] * num_processes
+        min_gain_l = [7] * num_processes
+        kick_strategy_l = ["random"] * num_processes
+        kick_rate_l = [100] * num_processes
+        give_up_rate_l = [1000] * num_processes
+        min_avg_pop_size_l = [0.64] * num_processes
+        min_pop_size_l = [0.62] * num_processes
+        runtime = 1800
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        name = "results"+timestr+".txt"
+        name = "p_4.txt"
+        with open(name, 'w') as f: 
+                    f.write("Results\n\n")
+                    f.flush()
+
+
+        for i in range(num_processes):         
+            proc.append(Process(target=a_process_for_parallel_execution, args=(name,runtime,i,max_out_l[i],max_overall_l[i],min_gain_l[i], kick_strategy_l[i],kick_rate_l[i],give_up_rate_l[i],min_avg_pop_size_l[i],min_pop_size_l[i])))
+            proc[-1].start()
+            time.sleep(0.1)
+        for i in range(len(proc)):       
+            proc[i].join() 
+            
+        proc = []
+        
+        num_processes = 16     
+        max_out_l = [5] * num_processes
+        max_overall_l = [15] * num_processes
+        min_gain_l = [7] * num_processes
+        kick_strategy_l = ["random"] * num_processes
+        kick_rate_l = [100] * num_processes
+        give_up_rate_l = [1000] * num_processes
+        min_avg_pop_size_l = [0.645] * num_processes
+        min_pop_size_l = [0.62] * num_processes
+        runtime = 1800
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        name = "results"+timestr+".txt"
+        name = "p_5.txt"
+        with open(name, 'w') as f: 
+                    f.write("Results\n\n")
+                    f.flush()
+
+
+        for i in range(num_processes):         
+            proc.append(Process(target=a_process_for_parallel_execution, args=(name,runtime,i,max_out_l[i],max_overall_l[i],min_gain_l[i], kick_strategy_l[i],kick_rate_l[i],give_up_rate_l[i],min_avg_pop_size_l[i],min_pop_size_l[i])))
+            proc[-1].start()
+            time.sleep(0.1)
+        for i in range(len(proc)):       
+            proc[i].join() 
+            
+        """    
+        proc = []
+        
+        num_processes = 16     
+        max_out_l = [5] * num_processes
+        max_overall_l = [15] * num_processes
+        min_gain_l = [7] * num_processes
+        kick_strategy_l = ["random"] * num_processes
+        kick_rate_l = [100] * num_processes
+        give_up_rate_l = [1000] * num_processes
+        min_avg_pop_size_l = [0.63] * num_processes
+        min_pop_size_l = [0.62] * num_processes
+        runtime = 1800
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        name = "results"+timestr+".txt"
+        name = "p_6.txt"
+        with open(name, 'w') as f: 
+                    f.write("Results\n\n")
+                    f.flush()
+                    
+        for i in range(num_processes):         
+            proc.append(Process(target=a_process_for_parallel_execution, args=(name,runtime,i,max_out_l[i],max_overall_l[i],min_gain_l[i], kick_strategy_l[i],kick_rate_l[i],give_up_rate_l[i],min_avg_pop_size_l[i],min_pop_size_l[i])))
+            proc[-1].start()
+            time.sleep(0.1)
+        for i in range(len(proc)):       
+            proc[i].join() 
+
+        proc = []
+        
+        num_processes = 16     
+        max_out_l = [5] * num_processes
+        max_overall_l = [15] * num_processes
+        min_gain_l = [7] * num_processes
+        kick_strategy_l = ["random"] * num_processes
+        kick_rate_l = [100] * num_processes
+        give_up_rate_l = [1000] * num_processes
+        min_avg_pop_size_l = [0.64] * num_processes
+        min_pop_size_l = [0.63] * num_processes
+        runtime = 1800
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        name = "results"+timestr+".txt"
+        name = "p_7.txt"
+        with open(name, 'w') as f: 
+                    f.write("Results\n\n")
+                    f.flush()
+                    
+        for i in range(num_processes):         
+            proc.append(Process(target=a_process_for_parallel_execution, args=(name,runtime,i,max_out_l[i],max_overall_l[i],min_gain_l[i], kick_strategy_l[i],kick_rate_l[i],give_up_rate_l[i],min_avg_pop_size_l[i],min_pop_size_l[i])))
+            proc[-1].start()
+            time.sleep(0.1)
+        for i in range(len(proc)):       
+            proc[i].join() 
+                    
+        proc = []
+        
+        num_processes = 16     
+        max_out_l = [5] * num_processes
+        max_overall_l = [15] * num_processes
+        min_gain_l = [7] * num_processes
+        kick_strategy_l = ["random"] * num_processes
+        kick_rate_l = [100] * num_processes
+        give_up_rate_l = [1000] * num_processes
+        min_avg_pop_size_l = [0.64] * num_processes
+        min_pop_size_l = [0.635] * num_processes
+        runtime = 1800
+        timestr = time.strftime("%Y%m%d-%H%M%S")
+        name = "results"+timestr+".txt"
+        name = "p_8.txt"
+        with open(name, 'w') as f: 
+                    f.write("Results\n\n")
+                    f.flush()
+                    
+                    
+        for i in range(num_processes):         
+            proc.append(Process(target=a_process_for_parallel_execution, args=(name,runtime,i,max_out_l[i],max_overall_l[i],min_gain_l[i], kick_strategy_l[i],kick_rate_l[i],give_up_rate_l[i],min_avg_pop_size_l[i],min_pop_size_l[i])))
+            proc[-1].start()
+            time.sleep(0.1)
+        for i in range(len(proc)):       
+            proc[i].join() 
+

@@ -1,4 +1,6 @@
-from itertools import combinations
+from itertools import combinations, count
+import collections
+import random
 
 import staaten
 import loosingKoalition
@@ -127,7 +129,10 @@ def get_winning_coalitions_from_2_loosing(input_coal: list[list], special_coalit
             
     return [W_1,W_2]
     
-def get_winning_coalitions_from_3_loosing(input_coal: list[list]) -> list[list]:
+def get_winning_coalitions_from_3_loosing(input_coal: list[list], iterations:int = 1) -> list[list]:
+    if iterations <= 0:
+        return []
+    
     l = [] # state pool
     for coal in input_coal:
         for i in coal:
@@ -145,42 +150,60 @@ def get_winning_coalitions_from_3_loosing(input_coal: list[list]) -> list[list]:
     w_2 = []
     w_3 = []
     
-    #ToDo
-    # to do triple state default in all three
-    # double state default in two of them
-    # caution: pop them out of l (pool)
+    duplicates = [(item,count) for item, count in collections.Counter(l).items() if count > 1]
+    for (item,count) in duplicates:
+        if count == 3:
+            w_1.append(item)
+            w_2.append(item)
+            w_3.append(item)
+
+            l.remove(item)
+            l.remove(item)
+            l.remove(item)
+    duplicates.reverse() # reverse the list, fill them from less to most populated: purpose filling the first for condition over 25 states and habe a lol of popultaion left
+    for (item,count) in (duplicates):       
+        if count == 2:
+            c = 2
+            l.remove(item)
+            if not is_winning(w_1):
+                w_1.append(item)
+            else:
+                l.remove(item)
+                w_2.append(item)
+                w_3.append(item)  
     
+ 
     #ToDo 2
     # greedy filling with randomness (or fill other way)
     # multiple tries
     
     i = len(l) - 1
     while(not is_winning(w_1)):
-        if i == 0:
+        if len(l) == 0:
             # print("no win")
-            return[]
-        if l[i] not in w_1:
+            return get_winning_coalitions_from_3_loosing(input_coal, iterations-1)
+        else:
             w_1.append(l.pop(i))
         i = i - 1
         
     
     i = len(l) - 1
     while(not is_winning(w_2)):
-        if i == 0:
+        if len(l) == 0:
             # print("just one win")
-            return[]
-        if l[i] not in w_2:
+            return get_winning_coalitions_from_3_loosing(input_coal, iterations-1)
+        else:
             w_2.append(l.pop(i))
         i = i - 1
         
-    for elem in l:
-        w_3.append(elem)    
+    
+    w_3 = w_3 + l    
     
     if is_winning(w_3):
         return [w_1,w_2,w_3]
     else:
         # print("just two win")
-        return[]
+        return get_winning_coalitions_from_3_loosing(input_coal, iterations-1)
 
 def is_non_separable(input_losing_coal: list[list], winning_coal: list[list]) -> bool:
     # lemma 2
