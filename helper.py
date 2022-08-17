@@ -22,3 +22,5 @@ def is_winning(input_coal: list[int]) -> bool:
         if pop_c >= 0.65:
             return True
     return False
+
+

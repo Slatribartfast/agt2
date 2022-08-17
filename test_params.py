@@ -1,7 +1,6 @@
 import time
 import os
 import matplotlib.pyplot as plt
-import numpy as np
 from multiprocessing import Process
 
 import staaten
@@ -51,14 +50,15 @@ def test(param_id:str,
         max_overall_params: list[int],
         min_avg_pop_params: list[float],
         min_pop_params: list[float],
-        runtime = 1800
+        runtime = 1800,
+        date = ""
         ):
     n = len(max_overall_params)
     if not (n == len(min_avg_pop_params) == len(min_pop_params)):
         print("Error: Parameter lists differ in length!")
         return
 
-    timestr = time.strftime("%Y%m%d-%H%M%S")
+
     for i in range(n):
         proc = []
 
@@ -75,7 +75,7 @@ def test(param_id:str,
         min_avg_pop_size_l = [min_avg_pop_params[i]] * num_processes
         min_pop_size_l = [min_pop_params[i]] * num_processes
 
-        name = param_id + "/" + timestr + "/p_" + str(i) + ".txt"
+        name = param_id + "/" + date + "/p_" + str(i) + ".txt"
         os.makedirs(os.path.dirname(name), exist_ok=True)
         with open(name, 'w') as f:
             f.write("Results")
@@ -93,7 +93,7 @@ def test(param_id:str,
         for i in range(len(proc)):
             proc[i].join()
 
-def plot_results(param_id:str, directory:str, file_count:int):
+def plot_results(param_id:str, directory:str, file_count:int, show_plt = False):
     max_overall, min_avg_pop, min_pop = [], [], []
     stats = []
     for i in range(file_count):
@@ -116,7 +116,7 @@ def plot_results(param_id:str, directory:str, file_count:int):
 
     covers_5 = [elem[0] if len(elem) > 0 else 0 for elem in stats]
     covers_6 = [elem[1] if len(elem) > 1 else 0 for elem in stats]
-    #covers_7 = [elem[2] if len(elem) > 1 else 0 for elem in stats]
+    covers_7 = [elem[2] if len(elem) > 2 else 0 for elem in stats]
 
     if param_id == "min_pop":
         plt.plot(min_pop,covers_5)
@@ -127,15 +127,17 @@ def plot_results(param_id:str, directory:str, file_count:int):
     elif param_id == "max_overall":
         plt.plot(max_overall, covers_5)
         plt.plot(max_overall, covers_6)
-        
+    else:
+        print("Param_id not recognized")
+
     plt.legend(("not 5 covers", "not 6 covers"))
     plt.xlabel(param_id)
     plt.ylabel("Covers")
     plt.title("Parameter study: Varying " + param_id)
     savepath = param_id + "/" + directory + "/" + "pyplot.pdf"
     plt.savefig(savepath)
-    plt.show()
+    if show_plt:
+        plt.show()
 
-PLOT = 1
-if PLOT:
-    plot_results("min_avg_pop","20220730-134153", 10)
+if __name__ == "__main__":
+    plot_results("min_avg_pop","20220817-015900", 18, show_plt = True)

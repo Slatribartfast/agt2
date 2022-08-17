@@ -8,7 +8,10 @@ def get_cover_count(name:str):
                 bool_c = True
             if bool_c and line != "\n":
                 bool_c = False
-                res.append(int(line.rstrip()))
+                try:
+                    res.append(int(line.rstrip()))
+                except:
+                    print("Error reading from file")
 
     print(f"logged {len(res)} nicht covers")
     c = 0
