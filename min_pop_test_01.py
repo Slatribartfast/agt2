@@ -10,8 +10,7 @@ if __name__ == '__main__':
         runtime = 1800
         param_count = 16
         max_overall_params = [15] * param_count
-        # min_avg_pop_params = [0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64]
-        # min_pop_params = [0.63, 0.631, 0.632, 0.633, 0.634, 0.635, 0.636, 0.637, 0.638, 0.639]
+
         min_avg_pop_params = [0.64] * param_count
         min_pop_params = [(i * 0.001 + 0.630) for i in range(param_count)]
 

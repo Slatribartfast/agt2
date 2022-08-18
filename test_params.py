@@ -116,7 +116,7 @@ def plot_results(param_id:str, directory:str, file_count:int, show_plt = False):
 
     covers_5 = [elem[0] if len(elem) > 0 else 0 for elem in stats]
     covers_6 = [elem[1] if len(elem) > 1 else 0 for elem in stats]
-    covers_7 = [elem[2] if len(elem) > 2 else 0 for elem in stats]
+    #covers_7 = [elem[2] if len(elem) > 2 else 0 for elem in stats]
 
     if param_id == "min_pop":
         plt.plot(min_pop,covers_5)
@@ -138,6 +138,7 @@ def plot_results(param_id:str, directory:str, file_count:int, show_plt = False):
     plt.savefig(savepath)
     if show_plt:
         plt.show()
+    plt.close()
 
 if __name__ == "__main__":
-    plot_results("min_avg_pop","20220817-015900", 18, show_plt = True)
+    plot_results("min_pop","20220818-033955", 20, show_plt = True)

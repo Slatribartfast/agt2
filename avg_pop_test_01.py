@@ -7,7 +7,7 @@ import test_params
 if __name__ == '__main__':
         # param_ids: "max_overall", "min_avg_pop", "min_pop"
         mode = "min_avg_pop"
-        runtime = 600
+        runtime = 60
         param_count = 18
         max_overall_params = [15] * param_count
 
