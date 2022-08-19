@@ -13,7 +13,7 @@ def get_cover_count(name:str):
                 except:
                     print("Error reading from file")
 
-    print(f"logged {len(res)} nicht covers")
+    #print(f"logged {len(res)} nicht covers")
     c = 0
     i = 0
     while c < len(res):
@@ -27,7 +27,7 @@ def get_cover_count(name:str):
             c = c + res.count(i)
 
             if (i >= 7):
-                print("7 cover excluded in " + name)
+                print(str(i) + " cover excluded in " + name)
                 get_7_covers(name)
                 with open("___7cover_found.txt", "a") as f:
                     f.write(name + "\n")
@@ -44,11 +44,14 @@ def get_7_covers(name:str):
                 bool_c = True
             elif bool_c:
                 bool_c = False
-                cover = int(line.rstrip())
-                if cover >= 7:
-                    #Hardcoded to match length of individual results; must be adapted for different max_overall lengths
-                    lines_to_copy = 21
-                    cover_l.append([])
+                try:
+                    cover = int(line.rstrip())
+                    if cover >= 7:
+                        #Hardcoded to match length of individual results; must be adapted for different max_overall lengths
+                        lines_to_copy = 21
+                        cover_l.append([])
+                except:
+                    print("Error reading line in get_7_covers")
 
             if (lines_to_copy > 0):
                 lines_to_copy -= 1

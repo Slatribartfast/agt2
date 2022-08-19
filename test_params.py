@@ -79,9 +79,9 @@ def test(param_id:str,
         os.makedirs(os.path.dirname(name), exist_ok=True)
         with open(name, 'w') as f:
             f.write("Results")
-            f.write("\n" + str(max_overall_l[0]))
-            f.write("\n" + str(min_avg_pop_size_l[0]))
-            f.write("\n" + str(min_pop_size_l[0]) + "\n\n")
+            f.write("\nMax overall: " + str(max_overall_l[0]))
+            f.write("\nMin avg pop: " + str(min_avg_pop_size_l[0]))
+            f.write("\nMin pop: " + str(min_pop_size_l[0]) + "\n\n")
             f.flush()
 
         for i in range(num_processes):
@@ -104,11 +104,11 @@ def plot_results(param_id:str, directory:str, file_count:int, show_plt = False):
         with open(name, 'r') as f:
             for line in f:
                 if line_c == 1:
-                    max_overall.append(int(line)) #get max_overall parameter
+                    max_overall.append(int("".join(i for i in line if i.isdigit()))) #get max_overall parameter
                 elif line_c == 2:
-                    min_avg_pop.append(float(line)) #get min_avg_pop
+                    min_avg_pop.append(float("".join(i for i in line if i.isdigit() or i == "."))) #get min_avg_pop
                 elif line_c == 3:
-                    min_pop.append(float(line)) #get min_pop
+                    min_pop.append(float("".join(i for i in line if i.isdigit() or i == "."))) #get min_pop
                 elif line_c == 4:
                     break
 
@@ -116,21 +116,35 @@ def plot_results(param_id:str, directory:str, file_count:int, show_plt = False):
 
     covers_5 = [elem[0] if len(elem) > 0 else 0 for elem in stats]
     covers_6 = [elem[1] if len(elem) > 1 else 0 for elem in stats]
-    #covers_7 = [elem[2] if len(elem) > 2 else 0 for elem in stats]
+    covers_7 = [elem[2] if len(elem) > 2 else 0 for elem in stats]
+
+    if any(covers_7):
+        plt_7 = True
+    else:
+        plt_7 = False
 
     if param_id == "min_pop":
-        plt.plot(min_pop,covers_5)
-        plt.plot(min_pop,covers_6)
+        plt.plot(min_pop, covers_5)
+        plt.plot(min_pop, covers_6)
+        if plt_7:
+            plt.plot(min_pop, covers_7)
     elif param_id == "min_avg_pop":
         plt.plot(min_avg_pop, covers_5)
         plt.plot(min_avg_pop, covers_6)
+        if plt_7:
+            plt.plot(min_avg_pop, covers_7)
     elif param_id == "max_overall":
         plt.plot(max_overall, covers_5)
         plt.plot(max_overall, covers_6)
+        if plt_7:
+            plt.plot(max_overall, covers_7)
     else:
         print("Param_id not recognized")
 
-    plt.legend(("not 5 covers", "not 6 covers"))
+    if plt_7:
+        plt.legend(("not 5 covers", "not 6 covers", "not 7 covers"))
+    else:
+        plt.legend(("not 5 covers", "not 6 covers"))
     plt.xlabel(param_id)
     plt.ylabel("Covers")
     plt.title("Parameter study: Varying " + param_id)
@@ -141,4 +155,4 @@ def plot_results(param_id:str, directory:str, file_count:int, show_plt = False):
     plt.close()
 
 if __name__ == "__main__":
-    plot_results("min_pop","20220818-033955", 20, show_plt = True)
+    plot_results("min_avg_pop","20220819-091848", 20, show_plt = True)
