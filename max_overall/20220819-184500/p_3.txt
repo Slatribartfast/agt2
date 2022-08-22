@@ -1,0 +1,5 @@
+Results
+Max overall: 18
+Min avg pop: 0.645
+Min pop: 0.643
+

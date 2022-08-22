@@ -9,7 +9,6 @@ import statistics
 from cover import get_cover
 
 def a_process_for_parallel_execution(name ="file.txt", runtime = 3600, id = -1, max_out = 5, max_overall: int = 15, min_gain: int = 6, kick_strategy:str = "random", kick_rate: int = 100, give_up_rate: int = 1000, min_avg_pop_size = 0.645,min_pop_size=0.62):
-    print("go")
     search_space = calculateLoosingKoalition.get_search_space(max_out, min_pop_size)
     best = 0
     tries = 0
@@ -26,12 +25,10 @@ def a_process_for_parallel_execution(name ="file.txt", runtime = 3600, id = -1, 
         lk = calculateLoosingKoalition.get_loosing_coalition(loosing_coals_all = search_space, max_out = max_out, max_overall = max_overall, min_gain = min_gain, kick_strategy = kick_strategy, kick_rate = kick_rate, give_up_rate = give_up_rate, min_avg_pop_size = min_avg_pop_size)
         res = get_cover(lk = lk, debug = False)
         if res > 4:
-            if res == 5:
-                points += 1
-            elif res == 6:
-                points += 100
             best = res
-            print(best)
+            if best > 6:
+                print(best)
+
             with open(name, 'a') as f:
                 f.write(str(best)+ "\n")
                 f.write(f"process id {id}\n")
@@ -154,5 +151,24 @@ def plot_results(param_id:str, directory:str, file_count:int, show_plt = False):
         plt.show()
     plt.close()
 
+    #create seperate plot showing only 7 covers excluded
+    if plt_7:
+        if param_id == "min_pop":
+            plt.plot(min_pop, covers_7)
+        elif param_id == "min_avg_pop":
+            plt.plot(min_avg_pop, covers_7)
+        elif param_id == "max_overall":
+            plt.plot(max_overall, covers_7)
+        else:
+            print("Param_id not recognized")
+
+        plt.xlabel(param_id)
+        plt.ylabel("Covers")
+        plt.title("Parameter study: Varying " + param_id)
+        plt.legend(("not 7 covers",))
+        savepath = param_id + "/" + directory + "/" + "pyplot_7c.pdf"
+        plt.savefig(savepath)
+        plt.close()
+
 if __name__ == "__main__":
-    plot_results("min_avg_pop","20220819-091848", 20, show_plt = True)
+    plot_results("max_overall","20220821-171807", 4, show_plt = True)

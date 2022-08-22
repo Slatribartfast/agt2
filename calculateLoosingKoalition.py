@@ -49,7 +49,7 @@ def get_search_space(max_out=5, min_pop_size=0.625):
     c = 0
     for s in loosing_coals_all:
         c = c + len(s)
-    print(f"There are {c} coalitions left this is the search space ({c} hoch 15)")
+    #print(f"There are {c} coalitions left this is the search space ({c} hoch 15)")
     return loosing_coals_all
 
 

@@ -1,6 +1,5 @@
 from itertools import combinations, count
 import collections
-import random
 
 import staaten
 import loosingKoalition
@@ -180,7 +179,6 @@ def get_winning_coalitions_from_3_loosing(input_coal: list[list], iterations:int
     i = len(l) - 1
     while(not is_winning(w_1)):
         if len(l) == 0:
-            # print("no win")
             return get_winning_coalitions_from_3_loosing(input_coal, iterations-1)
         else:
             w_1.append(l.pop(i))
@@ -190,7 +188,6 @@ def get_winning_coalitions_from_3_loosing(input_coal: list[list], iterations:int
     i = len(l) - 1
     while(not is_winning(w_2)):
         if len(l) == 0:
-            # print("just one win")
             return get_winning_coalitions_from_3_loosing(input_coal, iterations-1)
         else:
             w_2.append(l.pop(i))
@@ -202,7 +199,6 @@ def get_winning_coalitions_from_3_loosing(input_coal: list[list], iterations:int
     if is_winning(w_3):
         return [w_1,w_2,w_3]
     else:
-        # print("just two win")
         return get_winning_coalitions_from_3_loosing(input_coal, iterations-1)
 
 def is_non_separable(input_losing_coal: list[list], winning_coal: list[list]) -> bool:
@@ -225,7 +221,7 @@ def is_non_separable(input_losing_coal: list[list], winning_coal: list[list]) ->
             return False
     return True
 
-def get_cover(lk = loosingKoalition.loosing_coalitions, debug = True) -> int:   
+def get_cover(lk = loosingKoalition.loosing_coalitions, debug = False) -> int:
     res = -1 # if requirements not fullfilled -> return -1
     
     # first calualate as much non_sep as possible

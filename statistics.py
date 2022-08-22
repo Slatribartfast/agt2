@@ -29,9 +29,6 @@ def get_cover_count(name:str):
             if (i >= 7):
                 print(str(i) + " cover excluded in " + name)
                 get_7_covers(name)
-                with open("___7cover_found.txt", "a") as f:
-                    f.write(name + "\n")
-
 
     return ret
 
